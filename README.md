@@ -10,6 +10,20 @@ REQUIREMENTS
 + [PAUP*](http://phylosolutions.com/paup-test/) 4
 
 
+USAGE
+-----------
+```bash
+python run_dtm_pipeline.py \
+    --gene_trees input/estimated_gene_trees.txt \
+    --outdir results \
+    --astrid_bin software/ASTRID/ASTRID-linux \
+    --astral4_bin software/ASTER/bin/astral4 \
+    --treemerge_script software/treemerge/treemerge.py \
+    --paup software/paup4a168_ubuntu64 \
+    --threads 32 \
+    --max_subset_size 100
+```
+
 TUTORIAL
 --------
 + [Slides](http://erinkmolloy.web.illinois.edu/ekm-trees19.pdf)
