@@ -1,52 +1,36 @@
-TreeMerge
+TreeMerge Divide-and-Conquer Species Tree Estimation Pipeline
 =======
-TreeMerge is a tool for scaling phylogengy estimation methods to large datasets. TreeMerge can be used in a divide-and-conquer framework as follows: 1) divide the species set into disjoint subsets, 2) construct trees on each subset, and 3) combine the subset trees using an associated distance matrix (on the full species set). TreeMerge has been sucessfully tested in the context of species tree estimation (Molloy and Warnow, 2019).
+This repository provides a fully automated implementation of a divide-and-conquer species tree estimation pipeline based on [TreeMerge](https://github.com/ekmolloy/treemerge) introduced in [Molloy and Warnow, Bioinformatics 2019](https://academic.oup.com/bioinformatics/article/35/14/i417/5529167). This pipeline is based on the [Trees in the desert tutorial](https://github.com/ekmolloy/trees-in-the-desert-tutorial). 
+
+The pipeline automates the full workflow using a single command-line interface.
+
+1. AGID matrix estimation from gene trees using ASTRID
+2. Starting tree estimation using FastME
+3. Recursive taxon decomposition 
+4. Subset species tree estimation using ASTRAL4
+5. TreeMerge for merging subset trees
+6. Final branch support and branch length estimation using ASTRAL4
 
 
-REQUIREMENTS
+INSTALATION
 ------------
-+ Python 2.7 or later
-+ [DendroPy](https://www.dendropy.org) 4.3.0
-+ [PAUP*](http://phylosolutions.com/paup-test/) 4
-
+```
+conda create -n treemerge python=3.9 -y
+conda activate treemerge
+conda env update -f environment.yml
+```
 
 USAGE
 -----------
 ```bash
 python run_dtm_pipeline.py \
-    --gene_trees input/estimated_gene_trees.txt \
+    --gene_trees example/estimated_gene_trees.txt \
     --outdir results \
-    --astrid_bin software/ASTRID/ASTRID-linux \
-    --astral4_bin software/ASTER/bin/astral4 \
-    --treemerge_script software/treemerge/treemerge.py \
+    --astrid_bin software/ASTRID-linux \
+    --astral4_bin software/astral4 \
+    --treemerge_script software/treemerge.py \
     --paup software/paup4a168_ubuntu64 \
     --threads 32 \
     --max_subset_size 100
 ```
 
-TUTORIAL
---------
-+ [Slides](http://erinkmolloy.web.illinois.edu/ekm-trees19.pdf)
-+ [Hands-on Worksheet](https://github.com/ekmolloy/trees-in-the-desert-tutorial)
-
-
-CHANGES
--------
-If subsets are created by deleting edges from a starting tree, then the starting tree can be used to define the spanning tree on subsets given to TreeMerge as input. TreeMerge no longer uses the method described in Section 3.3 for deriving the spanning tree on subsets from a starting tree; it now uses the approach described in Theorem 9, but modified to handle the special case where edges that are less than two edges apart in the starting tree are deleted.
-
-
-CITATION
---------
-```
-@article{MolloyWarnow2019,
-    author={Erin Molloy and Tandy Warnow},
-    title={{TreeMerge: A new method for improving the scalability of species tree estimation methods}},
-    year={2019},
-    journal={Bioinformatics},
-    note={in press}
-}
-```
-
-LICENSE
--------
-Please see [LICENSE.txt](LICENSE.txt) for details.
